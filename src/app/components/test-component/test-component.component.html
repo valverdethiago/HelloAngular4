@@ -2,27 +2,36 @@
 <ul>
   <li *ngFor="let user of users"> 
     {{user.name}} {{user.age}}
+    <button (click)="edit(user)">Edit</button>
     <button (click)="delete(user)">X</button>
     <ul>
       <li>{{user.address.street}}  {{user.address._number}}</li>
     </ul>
   </li>
 <ul>
-<button *ngIf="newUser == null" (click)="createNew();">New</button>
+<button *ngIf="user == null" (click)="createNew();">New</button>
 
-<div *ngIf="newUser != null">
+<div *ngIf="user != null">
   <h2>Aqui vou incluir um usuario</h2>
   <form>
-    Name: <input type="text" [(ngModel)]="newUser.name" 
+    Name: <input type="text" [(ngModel)]="user
+  .name" 
       name="name" /> <br/>
-    Age: <input type="number" [(ngModel)]="newUser.age" 
+    Age: <input type="number" [(ngModel)]="user
+  .age" 
     name="age" /> <br/>
     <h3>Address</h3>
-    Street: <input type="text" [(ngModel)]="newUser.address.street" 
+    Street: <input type="text" [(ngModel)]="user
+  .address.street" 
       name="street" /> <br/>
-    Number: <input type="number" [(ngModel)]="newUser.address._number" 
+    Number: <input type="number" [(ngModel)]="user
+  .address._number" 
       name="_number" /> <br/>
   </form>
+  <h3> POSTS </h3>
+  <ul>
+    <li *ngFor="let post of user.posts">{{post.title}}</li>
+  </ul>
   <button (click)="insert();">OK</button>
   <button (click)="cancelInsert();">Cancel</button>
 </div>

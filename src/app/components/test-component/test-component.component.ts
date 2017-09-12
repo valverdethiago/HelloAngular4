@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-test-component',
@@ -8,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class TestComponentComponent implements OnInit {
 
   users : User[] = [];
-  newUser : User = null;
+  user : User = null;
 
-  constructor() { 
+  constructor(private postService:PostService) { 
     console.log('constructor');
   }
 
@@ -22,7 +23,8 @@ export class TestComponentComponent implements OnInit {
       address : {
         street : 'Rua Tal',
         _number : 666
-      }
+      },
+      posts : null
     });
     this.users.push({
       name : 'Fulano de Tal',
@@ -30,7 +32,8 @@ export class TestComponentComponent implements OnInit {
       address : {
         street : 'Rua Tal',
         _number : 666
-      }
+      },
+      posts : null
     })
   }
 
@@ -44,23 +47,32 @@ export class TestComponentComponent implements OnInit {
   }
 
   createNew() {
-    this.newUser = {
+    this.user = {
       name : '',
       age: null,
       address : {
         street : '',
         _number : null
-      }
+      },
+      posts : null
     }
   }
 
+  edit(user:User) {
+    this.user = user;
+    this.postService.fetchPosts().subscribe((posts) => {
+      console.log(posts);
+      this.user.posts = posts;
+    });
+  }
+
   cancelInsert() {
-    this.newUser = null;
+    this.user = null;
   }
 
   insert() {
-    this.users.push(this.newUser);
-    this.newUser = null;
+    this.users.push(this.user);
+    this.user = null;
   }
 
 }
@@ -68,10 +80,18 @@ export class TestComponentComponent implements OnInit {
 interface User {
   name : String,
   age : number,
-  address : Address
+  address : Address,
+  posts : Post[]
 }
 
 interface Address {
   street : String;
   _number : number;
+}
+
+interface Post {
+  id : number,
+  title : String,
+  body : String,
+  userId : number
 }
