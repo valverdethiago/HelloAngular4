@@ -1,0 +1,28 @@
+
+<ul>
+  <li *ngFor="let user of users"> 
+    {{user.name}} {{user.age}}
+    <button (click)="delete(user)">X</button>
+    <ul>
+      <li>{{user.address.street}}  {{user.address._number}}</li>
+    </ul>
+  </li>
+<ul>
+<button *ngIf="newUser == null" (click)="createNew();">New</button>
+
+<div *ngIf="newUser != null">
+  <h2>Aqui vou incluir um usuario</h2>
+  <form>
+    Name: <input type="text" [(ngModel)]="newUser.name" 
+      name="name" /> <br/>
+    Age: <input type="number" [(ngModel)]="newUser.age" 
+    name="age" /> <br/>
+    <h3>Address</h3>
+    Street: <input type="text" [(ngModel)]="newUser.address.street" 
+      name="street" /> <br/>
+    Number: <input type="number" [(ngModel)]="newUser.address._number" 
+      name="_number" /> <br/>
+  </form>
+  <button (click)="insert();">OK</button>
+  <button (click)="cancelInsert();">Cancel</button>
+</div>
